@@ -1,4 +1,4 @@
-name: Build Linux
+name: Release Test
 on:
   push:
     branches: [ main ]
@@ -6,16 +6,8 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-concurrency:
-  group: environment-lin-${{ github.ref }}
-  cancel-in-progress: true
-
 permissions:
   contents: write
-
-env:
-  # See https://github.com/git-lfs/git-lfs/issues/5749
-  GIT_CLONE_PROTECTION_ACTIVE: 'false'
 
 jobs:
   build:
@@ -32,7 +24,7 @@ jobs:
         with:
           submodules: true
 
-      - name: Update nightly release
+      - name: Release
         uses: pyTooling/Actions/releaser/composite@main
         with:
           tag: nightly
